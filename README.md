@@ -71,14 +71,12 @@ Features are grouped into three conceptual categories:
 
 ## Notebooks
 
-| Notebook | Description | Status |
-|---|---|---|
-| `01_data_acquisition.ipynb` | Load UCI dataset, initial inspection | ✅ Complete |
-| `02_eda.ipynb` | Univariate, bivariate, correlation, MI analysis | ✅ Complete |
-| `03_preprocessing.ipynb` | Feature engineering, imputation, scaling, split | ✅ Complete |
-| `04_modeling.ipynb` | LR, RF, XGBoost training, evaluation, comparison | ✅ Complete |
-| `05_clv_modeling.ipynb` | BG/NBD + Gamma-Gamma CLV estimation | 🔜 Planned |
-| `06_deployment.ipynb` | Scoring pipeline, segment API | 🔜 Planned |
+| Notebook | Description |
+|---|---|
+| `01_data_acquisition.ipynb` | Load UCI dataset, initial inspection and quality assessment |
+| `02_eda.ipynb` | Univariate distributions, bivariate analysis, correlation and mutual information |
+| `03_preprocessing.ipynb` | Feature engineering, imputation, log1p scaling, stratified train/test split |
+| `04_modeling.ipynb` | Logistic Regression, Random Forest, and XGBoost training, evaluation, and comparison |
 
 ---
 
@@ -88,7 +86,7 @@ Features are grouped into three conceptual categories:
 .
 ├── data/
 │   ├── raw/                        # UCI Online Retail II (.xlsx)
-│   └── processed/                  # Train/test splits (CSV)
+│   └── processed/                  # Train/test splits output by 03_preprocessing.ipynb
 │       ├── X_train.csv
 │       ├── X_test.csv
 │       ├── X_train_lr.csv          # Scaled version for Logistic Regression
@@ -96,13 +94,13 @@ Features are grouped into three conceptual categories:
 │       ├── y_train.csv
 │       └── y_test.csv
 ├── models/
-│   └── preprocessor_lr.pkl         # Fitted sklearn pipeline
+│   └── preprocessor_lr.pkl         # Fitted sklearn pipeline (log1p + StandardScaler)
 ├── 01_data_acquisition.ipynb
 ├── 02_eda.ipynb
 ├── 03_preprocessing.ipynb
 ├── 04_modeling.ipynb
-├── model_metrics.csv               # Full model comparison + parameters
-├── Capstone_Final_Report.pdf       # Written report with figures
+├── model_metrics.csv               # Full model comparison table + hyperparameters
+├── Capstone_Final_Report.pdf       # Written report with embedded figures
 ├── Capstone_Final_Presentation.pptx
 └── README.md
 ```
@@ -169,15 +167,6 @@ The model outputs a churn probability score for each customer. Combined with est
 | **Low Churn Risk** | Nurture — upsell, cross-sell | Harvest — no spend, monitor |
 
 A 40% precision threshold (configurable) ensures retention spend is only triggered when the model is reasonably confident, maintaining positive expected ROI on intervention costs.
-
----
-
-## Next Steps
-
-- **BG/NBD + Gamma-Gamma** probabilistic CLV model (Notebook 05)
-- **SHAP explainability** — per-customer feature attribution for personalized messaging
-- **Probability calibration** — isotonic regression on top of Random Forest for better CLV dollar estimates
-- **Scoring API** — lightweight Flask endpoint for real-time churn scoring at checkout
 
 ---
 
